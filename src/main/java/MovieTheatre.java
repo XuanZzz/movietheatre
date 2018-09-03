@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class MovieTheatre {
-    private List<List<Boolean>> seats;
-    private List<List<Integer>> scores;
+    private MovieTheatreSeat[][] seats; // true as occupied
+    private PriorityQueue<MovieTheatreSeat> pq; // store scores of seats for getting best seats
     private final int ROWS;
     private final int COLS;
     private final int CAPACITY;
@@ -16,14 +17,15 @@ public class MovieTheatre {
         if(i < 0 || i >= ROWS || j < 0 || j >= COLS) {
             throw  new IllegalArgumentException("Illegal query parameters: row/column number!");
         }
-        return seats.get(i).get(j);
+        return seats[i][j].isAvailable();
     }
 
     private int availableSeats;
 
     // initialize scores for different seats in the theatre
-    private void initScores() {
-        scores = new ArrayList<List<Integer>>();
+    private void initSeats() {
+        pq = new PriorityQueue<MovieTheatreSeat>(CAPACITY, new SortByScore());
+
         // center seats: 100, decrease by distance from center seats
         int midRow = ROWS / 2;
         int diffRow = 100 / ROWS;
@@ -31,17 +33,19 @@ public class MovieTheatre {
         int diffCol = 100 / COLS;
         // set scores for each row, then add to scores matrix
         for(int i = 0; i < ROWS; ++i) {
-            List<Integer> currRow = new ArrayList<Integer>();
             // base score for the leftmost seats in current row
             int baseScore = 100 - (Math.abs(i - midRow) * diffRow) - midCol * diffCol;
             for(int j = 0; j < COLS; ++j) {
-                currRow.add(baseScore);
+                MovieTheatreSeat currSeat = new MovieTheatreSeat(i, j, baseScore);
+                seats[i][j] = currSeat;
+                pq.add(currSeat);
                 // before reach the middle seat, add score, after, decrease score
                 baseScore += j < midCol ? diffCol : -diffCol;
             }
-            scores.add(currRow);
         }
+
     }
+
 
     public MovieTheatre(int rows, int cols) throws Exception {
         if(rows <= 0 || cols <= 0) {
@@ -51,31 +55,28 @@ public class MovieTheatre {
         ROWS = rows;
         COLS = cols;
         CAPACITY = ROWS * COLS;
-        availableSeats = 0;
+        availableSeats = CAPACITY;
 
-        seats = new ArrayList<List<Boolean>>();
-        for(int i=0; i<ROWS; ++i) {
-            List<Boolean> currRow = new ArrayList<Boolean>(COLS);
-            seats.add(currRow);
-        }
-        initScores();
+        seats = new MovieTheatreSeat[ROWS][COLS];
+        initSeats();
     }
 
-    private String translateSeatNumber(int i, int j) {
-        if(i < 0 || i >= ROWS || j < 0 || j >= COLS) {
-            throw  new IllegalArgumentException("Illegal query parameters: row/column number!");
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(i+'A');
-        stringBuilder.append(j);
-        return  stringBuilder.toString();
+
+    private void getNeighbourSeats(MovieTheatreSeat seat, int targetNum) {
+
     }
 
-    public List<List<String>> getSeats(int numSeats) throws Exception {
+    public List<MovieTheatreSeat> getSeats(int numSeats) throws Exception {
         if(numSeats > availableSeats) {
             throw new IllegalArgumentException("Illegal number of seats requested!");
         }
-        List<List<String>> res = new ArrayList<List<String>>();
+        List<MovieTheatreSeat> res = new ArrayList<MovieTheatreSeat>();
+
+        MovieTheatreSeat bestSeat = pq.poll();
+
+
+        getNeighbourSeats(bestSeat, numSeats - 1);
+
         return res;
     }
 }
