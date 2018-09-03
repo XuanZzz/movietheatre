@@ -46,5 +46,14 @@ class MovieTheatreTest {
         assertEquals(2, seats.size());
         assertEquals("F10", seats.get(0).getName());
         assertEquals("F9", seats.get(1).getName());
+
+        assertEquals(false, movieTheatre.isSeatAvailable(5, 10));
+        assertEquals(false, movieTheatre.isSeatAvailable(5, 9));
+
+        try {
+            seats = movieTheatre.getSeats(200);
+            fail("Exception wasn't thrown due to not enough seats.");
+        }
+        catch(Exception e) {}
     }
 }
