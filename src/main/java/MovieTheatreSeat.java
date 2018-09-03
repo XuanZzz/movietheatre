@@ -26,6 +26,11 @@ public class MovieTheatreSeat {
     private int row;
     private int col;
     private String name;
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     private boolean isAvailable;
 
     public MovieTheatreSeat(int row, int col, int score) {
@@ -38,7 +43,7 @@ public class MovieTheatreSeat {
 
     private String translateSeatNumber(int i, int j) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(i+'A');
+        stringBuilder.append((char)('A'+i));
         stringBuilder.append(j);
         return  stringBuilder.toString();
     }
@@ -48,9 +53,9 @@ public class MovieTheatreSeat {
 
 class SortByScore implements Comparator<MovieTheatreSeat>
 {
-    // Used for sorting in ascending order of score
+    // Used for sorting in descending order of score
     public int compare(MovieTheatreSeat a, MovieTheatreSeat b)
     {
-        return a.getScore() - b.getScore();
+        return b.getScore() - a.getScore();
     }
 }

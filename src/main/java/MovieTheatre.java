@@ -62,8 +62,21 @@ public class MovieTheatre {
     }
 
 
-    private void getNeighbourSeats(MovieTheatreSeat seat, int targetNum) {
+    private void getNeighbourSeats(MovieTheatreSeat seat, List<MovieTheatreSeat> res, int target) {
+        if(!seat.isAvailable()) return;
 
+        // add current seat to result array, and set availability to false
+        res.add(seat);
+        seat.setAvailable(false);
+        if(res.size() == target) return;
+
+        int i = seat.getRow();
+        int j = seat.getCol();
+
+        // get neighbour seats of same row
+        if(j > 0 && seats[i][j-1].isAvailable()) getNeighbourSeats(seats[i][j-1], res, target);
+        if(res.size() == target) return;
+        if(j < COLS - 1 && seats[i][j+1].isAvailable()) getNeighbourSeats(seats[i][j+1], res, target);
     }
 
     public List<MovieTheatreSeat> getSeats(int numSeats) throws Exception {
@@ -72,10 +85,19 @@ public class MovieTheatre {
         }
         List<MovieTheatreSeat> res = new ArrayList<MovieTheatreSeat>();
 
-        MovieTheatreSeat bestSeat = pq.poll();
+        while(res.size() < numSeats) {
+            // clear unavailable seats that are left on top of pq
+            while(!pq.isEmpty() && !pq.peek().isAvailable()) {
+                pq.poll();
+            }
 
-
-        getNeighbourSeats(bestSeat, numSeats - 1);
+            // get current best seat
+            MovieTheatreSeat bestSeat = pq.poll();
+            // get seats in same row
+            getNeighbourSeats(bestSeat, res, numSeats);
+            if(res.size() == numSeats) break;
+            // if res size still less than number required, continue to pull from pq
+        }
 
         return res;
     }
