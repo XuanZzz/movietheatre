@@ -9,11 +9,15 @@ This is the Java implementation of the Movie Theatre Code Challenge.
 
 $ mvn install
 
+## To run the tests:
+
+$ mvn test
+
 ## To run the client:
 
 $ target/bin/runClient input_file_path
 
-Output is path to output file.
+Output on command line is the path to output file.
 
 ## To run the client with example:
 
