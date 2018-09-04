@@ -40,13 +40,14 @@ public class MovieTheatreSeat {
         this.col = col;
         this.score = score;
         this.isAvailable = true;
-        this.name = translateSeatNumber(row, col);
+        this.name = translateSeatNumber();
     }
 
-    private String translateSeatNumber(int i, int j) {
+    // translate row and col number to "A1" format
+    private String translateSeatNumber() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append((char)('A'+i));
-        stringBuilder.append(j+1); // o based to 1 based output
+        stringBuilder.append((char)('A'+row));
+        stringBuilder.append(col+1); // 0 based to 1 based output
         return  stringBuilder.toString();
     }
 

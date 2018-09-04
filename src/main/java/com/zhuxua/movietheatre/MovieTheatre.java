@@ -26,6 +26,7 @@ public class MovieTheatre {
         return availableSeats;
     }
 
+    // return true if seat[i][j] is available
     public boolean isSeatAvailable(int i, int j) {
         if(i < 0 || i >= ROWS || j < 0 || j >= COLS) {
             throw  new IllegalArgumentException("Illegal query parameters: row/column number!");
@@ -80,7 +81,7 @@ public class MovieTheatre {
         this.movieName = movieName;
     }
 
-
+    // add current seat if available, then check left and right seats' availabilities
     private void getNeighbourSeats(MovieTheatreSeat seat, List<MovieTheatreSeat> res, int target) {
         if(!seat.isAvailable()) return;
 
@@ -99,6 +100,7 @@ public class MovieTheatre {
         if(j < COLS - 1 && seats[i][j+1].isAvailable()) getNeighbourSeats(seats[i][j+1], res, target);
     }
 
+    // request handling interface here
     public List<MovieTheatreSeat> getSeats(int numSeats) throws Exception {
         if(numSeats > availableSeats) {
             throw new IllegalArgumentException("Illegal number of seats requested!");
