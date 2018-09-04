@@ -1,3 +1,5 @@
+package com.zhuxua.movietheatre;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,16 @@ public class MovieTheatre {
     private final int ROWS;
     private final int COLS;
     private final int CAPACITY;
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
+
+    private String movieName;
 
     public int getAvailableSeats() {
         return availableSeats;
@@ -25,7 +37,7 @@ public class MovieTheatre {
 
     // initialize scores for different seats in the theatre
     private void initSeats() {
-        pq = new PriorityQueue<MovieTheatreSeat>(CAPACITY, new SortByScore());
+        pq = new PriorityQueue<>(CAPACITY, new SortByScore());
 
         // center seats: 100, decrease by distance from center seats
         int midRow = ROWS / 2;
@@ -57,9 +69,15 @@ public class MovieTheatre {
         COLS = cols;
         CAPACITY = ROWS * COLS;
         availableSeats = CAPACITY;
+        movieName = "";
 
         seats = new MovieTheatreSeat[ROWS][COLS];
         initSeats();
+    }
+
+    public MovieTheatre(int rows, int cols, String movieName) throws Exception {
+        this(rows, cols);
+        this.movieName = movieName;
     }
 
 
@@ -84,7 +102,7 @@ public class MovieTheatre {
         if(numSeats > availableSeats) {
             throw new IllegalArgumentException("Illegal number of seats requested!");
         }
-        List<MovieTheatreSeat> res = new ArrayList<MovieTheatreSeat>();
+        List<MovieTheatreSeat> res = new ArrayList<>();
 
         while(res.size() < numSeats) {
             // clear unavailable seats that are left on top of pq

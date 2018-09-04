@@ -1,4 +1,6 @@
-import org.junit.jupiter.api.BeforeAll;
+package com.zhuxua.movietheatre;
+
+import com.zhuxua.movietheatre.MovieTheatreSeat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ class MovieTheatreTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        movieTheatre = new MovieTheatre(10, 20);
+        movieTheatre = new MovieTheatre(10, 20, "Mission Impossible: Fallout");
     }
 
     @Test
@@ -41,6 +43,12 @@ class MovieTheatreTest {
     }
 
     @Test
+    void getMovieNameTest() {
+        movieTheatre.setMovieName("Avengers: Infinity War");
+        assertEquals("Avengers: Infinity War", movieTheatre.getMovieName());
+    }
+
+    @Test
     void getSeatsTest() throws Exception {
         List<MovieTheatreSeat> seats = movieTheatre.getSeats(2);
         assertEquals(2, seats.size());
@@ -51,7 +59,7 @@ class MovieTheatreTest {
         assertEquals(false, movieTheatre.isSeatAvailable(5, 9));
 
         try {
-            seats = movieTheatre.getSeats(200);
+            movieTheatre.getSeats(200);
             fail("Exception wasn't thrown due to not enough seats.");
         }
         catch(Exception e) {}

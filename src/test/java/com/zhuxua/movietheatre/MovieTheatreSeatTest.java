@@ -1,3 +1,6 @@
+package com.zhuxua.movietheatre;
+
+import com.zhuxua.movietheatre.MovieTheatreSeat;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

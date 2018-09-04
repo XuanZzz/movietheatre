@@ -1,3 +1,5 @@
+package com.zhuxua.movietheatre;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Client {
     }
 
     private List<Reservation> getRequests() throws Exception {
-        List<Reservation> requests = new ArrayList<Reservation>();
+        List<Reservation> requests = new ArrayList<>();
 
         File infile = new File(inpath);
         if(!infile.exists() || infile.isDirectory()) {

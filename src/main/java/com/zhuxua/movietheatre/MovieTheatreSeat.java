@@ -1,3 +1,5 @@
+package com.zhuxua.movietheatre;
+
 import java.util.Comparator;
 
 public class MovieTheatreSeat {

@@ -1,3 +1,5 @@
+package com.zhuxua.movietheatre;
+
 public class Reservation {
     public String getId() {
         return id;
