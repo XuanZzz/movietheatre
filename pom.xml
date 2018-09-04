@@ -59,7 +59,7 @@
                     <assembleDirectory>${project.build.directory}</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>Client</mainClass>
+                            <mainClass>com.zhuxua.movietheatre.Client</mainClass>
                             <id>runClient</id>
                         </program>
                     </programs>
