@@ -55,6 +55,7 @@ class MovieTheatreTest {
         assertEquals("F9", seats.get(0).getName());
         assertEquals("F10", seats.get(1).getName());
 
+        assertEquals(198, movieTheatre.getAvailableSeats());
         assertEquals(false, movieTheatre.isSeatAvailable(5, 10));
         assertEquals(false, movieTheatre.isSeatAvailable(5, 9));
 

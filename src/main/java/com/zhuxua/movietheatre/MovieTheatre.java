@@ -86,6 +86,7 @@ public class MovieTheatre {
 
         // add current seat to result array, and set availability to false
         res.add(seat);
+        --availableSeats;
         seat.setAvailable(false);
         if(res.size() == target) return;
 

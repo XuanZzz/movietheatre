@@ -24,7 +24,12 @@ $ target/bin/runClient src/main/resources/example.txt
 $ mvn clean
 
 ## To-Do:
-Add more tests
-Improve seats arrangement (e.g. seats on neighbour rows)
-Can make MovieTheatre class -> MovieTheatreScreen class, then one theatre could have several screens
+Add more tests;
+
+Improve seats arrangement (e.g. seats on neighbour rows);
+
+Can make MovieTheatre class -> MovieTheatreScreen class,
+then one theatre could have several screens
 and schedules of different screens.
+
+Add more applicable fields to MovieTheatre(start time, end time);
