@@ -44,8 +44,8 @@ class MovieTheatreTest {
     void getSeatsTest() throws Exception {
         List<MovieTheatreSeat> seats = movieTheatre.getSeats(2);
         assertEquals(2, seats.size());
-        assertEquals("F10", seats.get(0).getName());
-        assertEquals("F9", seats.get(1).getName());
+        assertEquals("F9", seats.get(0).getName());
+        assertEquals("F10", seats.get(1).getName());
 
         assertEquals(false, movieTheatre.isSeatAvailable(5, 10));
         assertEquals(false, movieTheatre.isSeatAvailable(5, 9));

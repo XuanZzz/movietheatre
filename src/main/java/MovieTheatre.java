@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -99,6 +100,8 @@ public class MovieTheatre {
             // if res size still less than number required, continue to pull from pq
         }
 
+        // sort seats in ascending order of row & col
+        res.sort(new SortByPosition());
         return res;
     }
 }

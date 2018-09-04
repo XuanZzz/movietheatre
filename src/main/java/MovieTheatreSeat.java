@@ -59,3 +59,12 @@ class SortByScore implements Comparator<MovieTheatreSeat>
         return b.getScore() - a.getScore();
     }
 }
+
+class SortByPosition implements Comparator<MovieTheatreSeat>
+{
+    // Used for sorting in descending order of row and column
+    public int compare(MovieTheatreSeat a, MovieTheatreSeat b)
+    {
+        return a.getRow() == b.getRow() ? a.getCol() - b.getCol() : a.getRow() - b.getRow();
+    }
+}
