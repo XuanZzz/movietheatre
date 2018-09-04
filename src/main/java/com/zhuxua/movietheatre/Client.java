@@ -21,6 +21,7 @@ public class Client {
         this.outpath = outpath;
     }
 
+    // parse requests from input file
     private List<Reservation> getRequests() throws Exception {
         List<Reservation> requests = new ArrayList<>();
 
@@ -34,16 +35,22 @@ public class Client {
         Scanner scanner = new Scanner(infile);
         while (scanner.hasNextLine()) {
             String[] orderInfo = scanner.nextLine().split(" ");
-            if(orderInfo.length != 2) {
+            if (orderInfo.length != 2) {
                 throw new IllegalArgumentException("Invalid input format! R#### + Number of seats!");
             }
-            Reservation request = new Reservation(orderInfo[0], Integer.parseInt(orderInfo[1]));
-            requests.add(request);
+            try {
+                Reservation request = new Reservation(orderInfo[0], Integer.parseInt(orderInfo[1]));
+                requests.add(request);
+            }
+            catch (Exception e) {
+                System.out.println("Invalid input format! R#### + Number of seats!");
+            }
         }
 
         return requests;
     }
 
+    // single request handling here: call movieTheatre getSeats() method
     private void handleSingleRequest(FileOutputStream outStream, Reservation request) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(request.getId());
@@ -67,6 +74,7 @@ public class Client {
         outStream.write(stringBuilder.toString().getBytes());
     }
 
+    // handle requests parsed from input file
     private void handleRequests(List<Reservation> requests) throws Exception {
         FileOutputStream outStream = new FileOutputStream(outpath, false);
 
@@ -102,6 +110,7 @@ public class Client {
         return res;
     }
 
+    // use input file path to produce output filepath
     private static String getOutputFilename(String filename) {
         int suffix = filename.lastIndexOf('.');
         String prefix = filename.substring(0, suffix);
