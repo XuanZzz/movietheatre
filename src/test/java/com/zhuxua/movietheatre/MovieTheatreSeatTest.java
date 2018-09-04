@@ -29,7 +29,7 @@ class MovieTheatreSeatTest {
 
     @Test
     void getName() {
-        assertEquals("A1", movieTheatreSeat.getName());
+        assertEquals("A2", movieTheatreSeat.getName());
     }
 
     @Test

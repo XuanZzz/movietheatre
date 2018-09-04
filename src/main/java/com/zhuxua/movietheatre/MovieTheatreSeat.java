@@ -46,7 +46,7 @@ public class MovieTheatreSeat {
     private String translateSeatNumber(int i, int j) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append((char)('A'+i));
-        stringBuilder.append(j);
+        stringBuilder.append(j+1); // o based to 1 based output
         return  stringBuilder.toString();
     }
 
