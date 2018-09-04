@@ -42,29 +42,41 @@ public class Client {
         return requests;
     }
 
+    private void handleSingleRequest(FileOutputStream outStream, Reservation request) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(request.getId());
+        stringBuilder.append(' ');
+        try {
+            // try to get requested seats
+            List<MovieTheatreSeat> seats = movieTheatre.getSeats(request.getNumSeats());
+            // first append reservation identifier
+            // then append seat indexes
+            for (MovieTheatreSeat seat : seats) {
+                stringBuilder.append(seat.getName());
+                stringBuilder.append(',');
+            }
+            stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(), "\n");
+        }
+        // log exception msg to output file if not successful
+        catch (Exception e) {
+            stringBuilder.append(e.getMessage());
+            stringBuilder.append('\n');
+        }
+        outStream.write(stringBuilder.toString().getBytes());
+    }
+
     private void handleRequests(List<Reservation> requests) throws Exception {
         FileOutputStream outStream = new FileOutputStream(outpath, false);
 
         // handle each request
         for(Reservation request : requests) {
-            List<MovieTheatreSeat> seats = movieTheatre.getSeats(request.getNumSeats());
-            StringBuilder stringBuilder = new StringBuilder();
-            // first append reservation identifier
-            stringBuilder.append(request.getId());
-            stringBuilder.append(' ');
-            // then append seat indexes
-            for(MovieTheatreSeat seat : seats) {
-                stringBuilder.append(seat.getName());
-                stringBuilder.append(',');
-            }
-            stringBuilder.replace(stringBuilder.length()-1, stringBuilder.length(), "\n");
-            outStream.write(stringBuilder.toString().getBytes());
+            handleSingleRequest(outStream, request);
         }
 
         outStream.flush();
         outStream.close();
-
     }
+
     public void run() throws Exception {
         List<Reservation> requests = getRequests();
         movieTheatre = new MovieTheatre(10, 20);
